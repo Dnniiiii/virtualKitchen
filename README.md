@@ -60,39 +60,6 @@ Use the above credentials to explore the full functionality without creating a n
 
 4. Start Apache and MySQL. Access the site via http://localhost/virtualKitchen.
 
-## 📁 Project Structure
-virtualKitchen/
-│
-├── index.php                  # Home page with login/register links or dashboard redirect
-├── login.php                  # Login form
-├── login_process.php          # Handles login validation and session creation
-├── logout.php                 # Destroys user session
-├── register.php               # Registration form
-├── register_process.php       # Handles new user registration
-│
-├── dashboard.php              # User dashboard (add/view recipes, logout)
-├── add_recipe.php             # Form for adding a new recipe
-├── add_recipe_process.php     # Saves new recipe to the database
-├── edit_recipe.php            # Form to edit existing recipe
-├── edit_recipe_process.php    # Updates recipe in the database
-├── delete_recipe.php          # Deletes a user’s recipe
-│
-├── view_recipes.php           # Lists all recipes (searchable)
-├── recipe_details.php         # Displays full details of a selected recipe
-├── contact.php                # Contact form with submission confirmation
-│
-├── includes/
-│   ├── db.php                 # Database connection using PDO
-│   └── navbar.php             # Reusable navigation bar for all pages
-│
-├── css/
-│   └── styles.css             # Site-wide pastel theme styling
-│
-├── images/
-│   └── (optional images)      # Folder for uploaded or static recipe images
-│
-└── README.md                  # Project overview and documentation
-
 ## Security Features
 Passwords hashed with password_hash() and verified with password_verify()
 
