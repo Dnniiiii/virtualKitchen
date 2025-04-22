@@ -4,12 +4,12 @@ require_once 'includes/db.php';
 
 $rid = intval($_GET['rid'] ?? 0);
 
-$stmt = $pdo->prepare("SELECT r.*, u.username FROM recipes r JOIN users u ON r.uid = u.uid WHERE r.rid = ?");
+$stmt = $pdo->prepare("SELECT recipes.*, users.username FROM recipes JOIN users ON recipes.uid = users.uid WHERE rid = ?");
 $stmt->execute([$rid]);
 $recipe = $stmt->fetch();
 
 if (!$recipe) {
-    echo "&#x26A0; Recipe not found.";
+    echo "Recipe not found.";
     exit();
 }
 ?>
@@ -18,7 +18,7 @@ if (!$recipe) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><?= htmlspecialchars($recipe['name']) ?> – Virtual Kitchen</title>
+    <title>Recipe Details – Virtual Kitchen</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
         body {
@@ -28,7 +28,7 @@ if (!$recipe) {
             padding: 2rem;
         }
 
-        .page-wrapper {
+        .recipe-details {
             max-width: 700px;
             margin: auto;
             background: #fff;
@@ -37,60 +37,57 @@ if (!$recipe) {
             box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
+        h2 {
             color: #d63384;
-            margin-bottom: 0.5rem;
         }
 
-        .meta {
-            font-size: 0.95rem;
-            color: #666;
+        p {
             margin-bottom: 1rem;
         }
 
-        .section-title {
-            margin-top: 1.5rem;
-            color: #c22568;
-            font-weight: bold;
-        }
-
-        p, ul {
-            line-height: 1.6;
-            color: #333;
-        }
-
-        .recipe-img {
-            width: 100%;
-            max-height: 300px;
-            object-fit: cover;
+        img {
+            max-width: 100%;
             border-radius: 10px;
-            margin: 1rem 0;
+            margin-top: 1rem;
+        }
+
+        .back-link {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .back-link a {
+            background: #f783ac;
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            background: #c22568;
         }
     </style>
 </head>
 <body>
     <?php include 'includes/navbar.php'; ?>
 
-    <div class="page-wrapper">
-        <h1>&#x1F958; <?= htmlspecialchars($recipe['name']) ?></h1>
-        <div class="meta">
-            Posted by <strong><?= htmlspecialchars($recipe['username']) ?></strong> |
-            Cuisine: <?= htmlspecialchars($recipe['type']) ?> |
-            Time: <?= (int)$recipe['Cookingtime'] ?> mins
-        </div>
+    <div class="recipe-details">
+        <h2>&#x1F372; <?= htmlspecialchars($recipe['name']) ?></h2>
 
-        <?php if (!empty($recipe['image'])): ?>
-            <img src="uploads/<?= htmlspecialchars($recipe['image']) ?>" alt="Recipe Image" class="recipe-img">
+        <p><strong>&#x1F464; By:</strong> <?= htmlspecialchars($recipe['username']) ?></p>
+        <p><strong>&#x1F372; Type:</strong> <?= htmlspecialchars($recipe['type']) ?></p>
+        <p><strong>&#x23F1; Cooking Time:</strong> <?= (int)$recipe['Cookingtime'] ?> mins</p>
+        <p><strong>&#x1F371; Ingredients:</strong><br><?= nl2br(htmlspecialchars($recipe['ingredients'])) ?></p>
+        <p><strong>&#x1F9C0; Instructions:</strong><br><?= nl2br(htmlspecialchars($recipe['instructions'])) ?></p>
+
+        <?php if ($recipe['image']): ?>
+            <img src="images/<?= htmlspecialchars($recipe['image']) ?>" alt="Recipe Image">
         <?php endif; ?>
 
-        <div class="section-title">&#x1F374; Description</div>
-        <p><?= nl2br(htmlspecialchars($recipe['description'])) ?></p>
-
-        <div class="section-title">&#x1F957; Ingredients</div>
-        <p><?= nl2br(htmlspecialchars($recipe['ingredients'])) ?></p>
-
-        <div class="section-title">&#x1F9C1; Instructions</div>
-        <p><?= nl2br(htmlspecialchars($recipe['instructions'])) ?></p>
+        <div class="back-link">
+            <a href="view_recipes.php">&#x2B05;&#xFE0F; Back to Recipes</a>
+        </div>
     </div>
 </body>
 </html>
