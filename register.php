@@ -13,11 +13,17 @@ session_start();
             background: #fff0f6;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex: 1;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            padding-top: 2rem;
+            align-items: center;
+            padding: 2rem;
         }
 
         .form-box {
@@ -77,15 +83,17 @@ session_start();
 <body>
     <?php include 'includes/navbar.php'; ?>
 
-    <div class="form-box">
-        <h2>&#x1F353; Create Your Account</h2>
-        <form action="register_process.php" method="post">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="email" name="email" placeholder="Email Address" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="submit" value="&#x1F465; Register">
-        </form>
-        <a href="login.php">&#x1F511; Already have an account? Log in</a>
+    <div class="main-content">
+        <div class="form-box">
+            <h2>&#x1F353; Create Your Account</h2>
+            <form action="register_process.php" method="post">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="submit" value="&#x1F4DD; Register">
+            </form>
+            <a href="login.php">&#x1F511; Already have an account? Log in</a>
+        </div>
     </div>
 </body>
 </html>
